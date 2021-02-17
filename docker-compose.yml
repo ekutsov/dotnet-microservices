@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+    first_api:
+        image: first_api
+        build:
+          context: .
+          dockerfile: FirstApi/Dockerfile
+        ports:
+          - 5001:80
+          
+    second_api:
+        image: second_api
+        build:
+          context: .
+          dockerfile: SecondApi/Dockerfile
+        ports:
+          - 5002:80
+
+    third_api:
+        image: third_api
+        build:
+          context: .
+          dockerfile: ThirdApi/Dockerfile
+        ports:
+          - 5003:80
+
+    fourth_api:
+        image: fourth_api
+        build:
+          context: .
+          dockerfile: FourthApi/Dockerfile
+        ports:
+          - 5004:80
+
+    fifth_api:
+        image: fifth_api
+        build:
+          context: .
+          dockerfile: FifthApi/Dockerfile
+        ports:
+          - 5005:80
+
+    proxy:
+      image: nginx:latest
+      volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf
+      ports:
+        - 80:80
