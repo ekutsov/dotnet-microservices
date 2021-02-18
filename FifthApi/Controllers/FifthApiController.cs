@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FifthApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -11,12 +12,17 @@ namespace FifthApi.Controllers
     [Route("")]
     public class FifthApiController : ControllerBase
     {
-        public FifthApiController() { }
+        private readonly IFifthApiService _service;
+        public FifthApiController(IFifthApiService service)
+        {
+            _service = service;
+        }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return new JsonResult("Hello from Fifth Api!");
+            var result = _service.GetResult();
+            return new JsonResult(result);
         }
     }
 }

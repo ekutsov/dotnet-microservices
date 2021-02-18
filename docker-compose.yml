@@ -8,6 +8,13 @@ services:
           dockerfile: FirstApi/Dockerfile
         ports:
           - 5001:80
+        environment:
+          - HOSTNAMERABBIT=rabbitmq
+        restart: on-failure
+        depends_on:
+            - rabbitmq
+        links:
+            - rabbitmq
           
     second_api:
         image: second_api
@@ -40,6 +47,13 @@ services:
           dockerfile: FifthApi/Dockerfile
         ports:
           - 5005:80
+        environment:
+          - HOSTNAMERABBIT=rabbitmq
+        restart: on-failure
+        depends_on:
+            - rabbitmq
+        links:
+            - rabbitmq
 
     proxy:
       image: nginx:latest
@@ -47,3 +61,11 @@ services:
         - ./nginx.conf:/etc/nginx/nginx.conf
       ports:
         - 80:80
+      restart: on-failure
+    
+    rabbitmq:
+      image: rabbitmq:management
+      container_name: rabbitmq
+      hostname: rabbitmq
+      ports:
+        - "5006:80"
